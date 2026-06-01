@@ -62,7 +62,7 @@ export default function TrustScore() {
             Identity / Wallet address
           </label>
           <input
-            id="wallet-address"
+            id="wallet-address" className="focus-visible"
             type="text"
             placeholder="G..."
             aria-describedby="trust-desc"

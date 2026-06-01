@@ -13,6 +13,7 @@ export default function Home() {
         <Link
           to="/bond"
           role="button"
+          className="focus-visible"
           style={{
             padding: '0.75rem 1.25rem',
             background: 'var(--color-primary)',
@@ -27,6 +28,7 @@ export default function Home() {
         <Link
           to="/trust"
           role="button"
+          className="focus-visible"
           style={{
             padding: '0.75rem 1.25rem',
             background: 'var(--border-default)',

@@ -89,6 +89,7 @@ export default function ErrorState({
       {action && (
         <button
           onClick={action.onClick}
+          className="focus-visible"
           style={{
             padding: '0.625rem var(--credence-space-5)',
             background: 'var(--credence-color-danger-action)',

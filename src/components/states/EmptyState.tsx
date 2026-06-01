@@ -85,6 +85,7 @@ export default function EmptyState({
       {action && (
         <button
           onClick={action.onClick}
+          className="focus-visible"
           style={{
             padding: 'var(--credence-space-3) var(--credence-space-6)',
             background:

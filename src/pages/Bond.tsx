@@ -51,23 +51,24 @@ export default function Bond() {
             Amount (USDC)
           </label>
           <input
-            id="bond-amount"
-            type="number"
-            placeholder="0"
-            min="0"
-            step="1"
-            aria-describedby="bond-desc"
-            style={{
-              width: '100%',
-              padding: 'var(--credence-space-3) var(--credence-space-4)',
-              border: '1px solid var(--border-default)',
-              borderRadius: 'var(--credence-radius-lg)',
-              fontSize: 'var(--credence-font-size-base)',
-              margin: 0,
-              background: 'var(--bg-page)',
-              color: 'var(--text-primary)',
-            }}
-          />
+              id="bond-amount"
+              type="number"
+              placeholder="0"
+              min="0"
+              step="1"
+              aria-describedby="bond-desc"
+              className="focus-visible"
+              style={{
+                width: '100%',
+                padding: 'var(--credence-space-3) var(--credence-space-4)',
+                border: '1px solid var(--border-default)',
+                borderRadius: 'var(--credence-radius-lg)',
+                fontSize: 'var(--credence-font-size-base)',
+                margin: 0,
+                background: 'var(--bg-page)',
+                color: 'var(--text-primary)',
+              }}
+            />
           <Button
             type="button"
             onClick={handleCreate}

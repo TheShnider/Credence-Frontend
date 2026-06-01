@@ -24,6 +24,7 @@ export default function ThemeToggle() {
     <button
       onClick={toggleTheme}
       aria-label="Toggle dark mode"
+      className="focus-visible"
       style={{
         padding: '0.5rem',
         borderRadius: '8px',

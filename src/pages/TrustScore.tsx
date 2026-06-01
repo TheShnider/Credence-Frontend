@@ -3,9 +3,15 @@ import Disclaimer from '../components/Disclaimer'
 import { useToast } from '../components/ToastProvider'
 import Badge from '../components/Badge'
 import Button from '../components/Button'
+import TrustGauge, { type TrustTier } from '../components/TrustGauge'
 
 export default function TrustScore() {
   const { addToast } = useToast()
+
+  // Mock data: current trust score and tier
+  // In production, these would come from wallet/contract data
+  const currentScore = 675
+  const currentTier: TrustTier = 'gold'
 
   const handleLookup = () => {
     addToast('success', 'Trust score retrieved.')
@@ -28,7 +34,11 @@ export default function TrustScore() {
         }}
       >
         <h1 style={{ margin: 0, color: 'var(--text-primary)' }}>Trust Score</h1>
-        <Badge variant="gold" label="Gold Tier" className="tier-badge" />
+        <Badge
+          variant={currentTier}
+          label={`${currentTier.charAt(0).toUpperCase()}${currentTier.slice(1)} Tier`}
+          className="tier-badge"
+        />
       </div>
       <p id="trust-desc" style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>
         Your reputation score is computed from bond amount, duration, and attestations.
@@ -36,6 +46,11 @@ export default function TrustScore() {
       <Banner severity="info">
         Scores update once per epoch. Recent bond changes may not be reflected immediately.
       </Banner>
+
+      {/* Trust Score Gauge - Primary visualization */}
+      <div style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+        <TrustGauge score={currentScore} tier={currentTier} />
+      </div>
 
       <div
         style={{

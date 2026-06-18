@@ -5,6 +5,7 @@ import Layout from './components/Layout'
 import Home from './pages/Home'
 import Bond from './pages/Bond'
 import TrustScore from './pages/TrustScore'
+import AmountInputTestPage from './pages/AmountInputTestPage'
 import NotFound from './pages/NotFound'
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="bond" element={<Bond />} />
             <Route path="trust" element={<TrustScore />} />
+            <Route path="test-amount-input" element={<AmountInputTestPage />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

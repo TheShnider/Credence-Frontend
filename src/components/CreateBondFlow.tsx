@@ -21,7 +21,7 @@ import Button from './Button'
 import Banner from './Banner'
 import Disclaimer from './Disclaimer'
 import { useToast } from './ToastProvider'
-import { computeBondSlashBreakdown } from '../lib/bondPenalty'
+import { computeBondSlashBreakdown, calcUnlockDate } from '../lib/bondPenalty'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 
 import './CreateBondFlow.css'
@@ -29,18 +29,6 @@ import './CreateBondFlow.css'
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
-
-/**
- * Derives the estimated unlock date from today + `days`.
- *
- * @param days - Lock duration in days.
- * @returns A locale-formatted date string (e.g. "Jul 19, 2026").
- */
-const calcUnlockDate = (days: number) => {
-  const today = new Date()
-  const unlock = new Date(today.getTime() + days * 24 * 60 * 60 * 1000)
-  return unlock.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
-}
 
 // ---------------------------------------------------------------------------
 // Divider used between review card sections

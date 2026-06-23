@@ -18,9 +18,9 @@ import type { ConfirmDialogPenaltyBreakdown } from '../components/ConfirmDialog'
 const ConfirmDialog = lazy(() => import('../components/ConfirmDialog'))
 
 const initialBonds: MockBond[] = [
-  { id: 1, amountUsdc: 1000, status: 'locked' },
-  { id: 2, amountUsdc: 500, status: 'grace-period' },
-  { id: 3, amountUsdc: 750, status: 'active' },
+  { id: 1, amountUsdc: 1000, status: 'locked', durationDays: 30 },
+  { id: 2, amountUsdc: 500, status: 'grace-period', durationDays: 90 },
+  { id: 3, amountUsdc: 750, status: 'active', durationDays: 180 },
 ]
 
 interface BondRowProps {

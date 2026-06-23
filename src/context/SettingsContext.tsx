@@ -80,6 +80,8 @@ const defaultState: SettingsState = {
 
 const SettingsContext = createContext<SettingsState>(defaultState)
 
+const LEGACY_THEME_KEY = 'theme'
+
 export function useSettings() {
   return useContext(SettingsContext)
 }

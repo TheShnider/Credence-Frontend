@@ -321,6 +321,7 @@ describe('SettingsProvider', () => {
       const user = userEvent.setup()
       renderWithProvider()
       await user.click(screen.getByRole('button', { name: 'set dark' }))
+      await user.click(screen.getByRole('button', { name: 'save' }))
 
       const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '{}')
       expect(stored.themeMode).toBe('dark')
@@ -348,6 +349,7 @@ describe('SettingsProvider', () => {
       const user = userEvent.setup()
       renderWithProvider()
       await user.click(screen.getByRole('button', { name: 'disable toasts' }))
+      await user.click(screen.getByRole('button', { name: 'save' }))
 
       const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '{}')
       expect(stored.toastsEnabled).toBe(false)
@@ -357,6 +359,7 @@ describe('SettingsProvider', () => {
       const user = userEvent.setup()
       renderWithProvider()
       await user.click(screen.getByRole('button', { name: 'set 3s' }))
+      await user.click(screen.getByRole('button', { name: 'save' }))
 
       const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '{}')
       expect(stored.autoDismiss).toBe('3s')

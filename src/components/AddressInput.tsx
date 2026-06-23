@@ -18,6 +18,8 @@ export interface AddressInputProps {
   disabled?: boolean
   /** Additional class names appended to the wrapper. */
   className?: string
+  /** Parent-provided validation error message. */
+  error?: string
 }
 
 /**
@@ -113,6 +115,7 @@ export default function AddressInput({
   onValidationChange,
   disabled = false,
   className = '',
+  error: externalError,
 }: AddressInputProps) {
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -179,9 +182,7 @@ export default function AddressInput({
     }
   }, [value])
 
-  const error = showError
-    ? 'Invalid address. Stellar public keys are 56 characters starting with G.'
-    : undefined
+  const error = externalError || (showError ? 'Invalid address. Stellar public keys are 56 characters starting with G.' : undefined)
   const hint = 'Stellar public key format (56 characters, starts with G)'
 
   return (

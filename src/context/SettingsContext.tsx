@@ -13,12 +13,33 @@ interface SettingsState {
   setAddressDisplay: (s: string) => void
   setToastsEnabled: (b: boolean) => void
   setAutoDismiss: (s: string) => void
-  saveSettings: () => void
+  saveSettings: (payload?: {
+    themeMode: ThemeMode
+    network: string
+    addressDisplay: string
+    toastsEnabled: boolean
+    autoDismiss: string
+  }) => void
   cancelSettings: () => void
   hasUnsavedChanges: boolean
 }
 
 const STORAGE_KEY = 'credence:settings'
+
+const LEGACY_THEME_KEY = 'theme'
+
+function isThemeMode(value: unknown): value is ThemeMode {
+  return value === 'light' || value === 'dark' || value === 'system'
+}
+
+function readLegacyThemeMode(): ThemeMode | null {
+  try {
+    const raw = localStorage.getItem(LEGACY_THEME_KEY)
+    return isThemeMode(raw) ? raw : null
+  } catch {
+    return null
+  }
+}
 
 const defaultState: SettingsState = {
   themeMode: 'system',
@@ -55,10 +76,13 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   }
 
   const savedSettings = loadSavedSettings()
+  const legacyThemeMode = readLegacyThemeMode()
 
   const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
-    return (savedSettings?.themeMode as ThemeMode) || 'system'
+    if (savedSettings && isThemeMode(savedSettings.themeMode)) return savedSettings.themeMode
+    return legacyThemeMode ?? 'system'
   })
+
 
   const [network, setNetwork] = useState<string>(() => {
     return savedSettings?.network || 'public'
@@ -115,11 +139,17 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   // Explicit save function
-  const saveSettings = () => {
+  const saveSettings = (payload?: {
+    themeMode: ThemeMode
+    network: string
+    addressDisplay: string
+    toastsEnabled: boolean
+    autoDismiss: string
+  }) => {
     try {
-      const payload = { themeMode, network, addressDisplay, toastsEnabled, autoDismiss }
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload))
-      setOriginalSettings({ themeMode, network, addressDisplay, toastsEnabled, autoDismiss })
+      const active = payload || { themeMode, network, addressDisplay, toastsEnabled, autoDismiss }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(active))
+      setOriginalSettings(active)
     } catch {
       // ignore
     }

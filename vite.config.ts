@@ -30,11 +30,12 @@ export default defineConfig({
     },
     coverage: {
       provider: 'v8',
-      include: ['src/components/AddressInput.tsx', 'src/components/Badge.tsx'],
+      include: ['src/components/AddressInput.tsx', 'src/components/Badge.tsx', 'src/lib/settingsSchema.ts'],
       reporter: ['text', 'lcov'],
       thresholds: {
         'src/components/AddressInput.tsx': { lines: 90, branches: 90 },
         'src/components/Badge.tsx': { branches: 95 },
+        'src/lib/settingsSchema.ts': { lines: 95, branches: 95 },
       },
     },
   },

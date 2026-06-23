@@ -19,6 +19,19 @@ interface SettingsState {
 }
 
 const STORAGE_KEY = 'credence:settings'
+const LEGACY_THEME_KEY = 'theme'
+
+function loadLegacyTheme(): ThemeMode | null {
+  try {
+    const legacyTheme = localStorage.getItem(LEGACY_THEME_KEY)
+    if (legacyTheme === 'light' || legacyTheme === 'dark' || legacyTheme === 'system') {
+      return legacyTheme
+    }
+    return null
+  } catch {
+    return null
+  }
+}
 
 const defaultState: SettingsState = {
   themeMode: 'system',
@@ -55,9 +68,10 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   }
 
   const savedSettings = loadSavedSettings()
+  const legacyTheme = loadLegacyTheme()
 
   const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
-    return (savedSettings?.themeMode as ThemeMode) || 'system'
+    return (savedSettings?.themeMode as ThemeMode) || legacyTheme || 'system'
   })
 
   const [network, setNetwork] = useState<string>(() => {

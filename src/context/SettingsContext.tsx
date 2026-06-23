@@ -73,7 +73,7 @@ const defaultState: SettingsState = {
   setAddressDisplay: () => {},
   setToastsEnabled: () => {},
   setAutoDismiss: () => {},
-  saveSettings: () => {},
+  saveSettings: (_payload?: SettingsBlob) => {},
   cancelSettings: () => {},
   hasUnsavedChanges: false,
 }

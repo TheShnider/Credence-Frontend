@@ -37,6 +37,7 @@ export default function RouteAnnouncer() {
 
   return (
     <div
+      role="none"
       className="sr-only"
       aria-live="polite"
       aria-atomic="true"

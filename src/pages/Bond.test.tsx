@@ -29,6 +29,11 @@ vi.mock('../context/WalletContext', () => ({
 
 vi.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate,
+  Link: ({ children, to, style }: { children: React.ReactNode; to: string; style?: React.CSSProperties }) => (
+    <a href={to} style={style}>
+      {children}
+    </a>
+  ),
 }))
 
 describe('Bond Page', () => {

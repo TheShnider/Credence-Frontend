@@ -42,7 +42,7 @@ describe('RouteAnnouncer Component', () => {
 
   it('updates text dynamically on active route modifications', () => {
     const { rerender } = render(
-      <MemoryRouter initialEntries={['/dashboard']}>
+      <MemoryRouter key="dashboard" initialEntries={['/dashboard']}>
         <RouteAnnouncer />
       </MemoryRouter>
     );
@@ -51,7 +51,7 @@ describe('RouteAnnouncer Component', () => {
     expect(screen.getByRole('none', { hidden: true }).textContent).toBe('Dashboard page loaded');
 
     rerender(
-      <MemoryRouter initialEntries={['/trust']}>
+      <MemoryRouter key="trust" initialEntries={['/trust']}>
         <RouteAnnouncer />
       </MemoryRouter>
     );

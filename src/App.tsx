@@ -4,11 +4,14 @@ import { SettingsProvider } from './context/SettingsContext'
 import { WalletProvider } from './context/WalletContext'
 import ToastProvider from './components/ToastProvider'
 import Layout from './components/Layout'
+import ErrorBoundary from './components/ErrorBoundary'
+import RouteErrorPage from './pages/RouteErrorPage'
 
 const Home = lazy(() => import('./pages/Home'))
 const Dashboard = lazy(() => import('./pages/Dashboard'))
 const Bond = lazy(() => import('./pages/Bond'))
 const CreateBondPage = lazy(() => import('./pages/CreateBondPage'))
+const BondDetail = lazy(() => import('./pages/BondDetail'))
 const TrustScore = lazy(() => import('./pages/TrustScore'))
 const Settings = lazy(() => import('./pages/Settings'))
 const AmountInputTestPage = lazy(() => import('./pages/AmountInputTestPage'))
@@ -37,6 +40,7 @@ function App() {
                     <Route path="dashboard" element={<Dashboard />} />
                     <Route path="bond" element={<Bond />} />
                     <Route path="bond/new" element={<CreateBondPage />} />
+                    <Route path="bond/:id" element={<BondDetail />} />
                     <Route path="trust" element={<TrustScore />} />
                     <Route path="settings" element={<Settings />} />
                     <Route path="test-amount-input" element={<AmountInputTestPage />} />

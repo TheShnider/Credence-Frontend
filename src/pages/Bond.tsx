@@ -1,5 +1,5 @@
 import { lazy, Suspense, useCallback, useMemo, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import Banner from '../components/Banner'
 import Disclaimer from '../components/Disclaimer'
 import { useToast } from '../components/ToastProvider'
@@ -10,52 +10,16 @@ import EmptyState from '../components/states/EmptyState'
 import { useWallet } from '../context/WalletContext'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import { formatUsdc } from '../lib/format'
-import { getPenaltyRate, computeWithdrawBreakdown } from '../lib/penalty'
-import type { MockBond } from '../lib/penalty'
+import { getPenaltyRate, computeWithdrawBreakdown } from '../lib/bondPenalty'
+import type { MockBond } from '../lib/bondPenalty'
 
 const ConfirmDialog = lazy(() => import('../components/ConfirmDialog'))
 
-type BondStatus = 'active' | 'locked' | 'grace-period'
-
-interface MockBond {
-  id: number
-  amountUsdc: number
-  status: BondStatus
-}
-
 const initialBonds: MockBond[] = [
-  { id: 1, amountUsdc: 1000, status: 'locked' },
-  { id: 2, amountUsdc: 500, status: 'grace-period' },
-  { id: 3, amountUsdc: 750, status: 'active' },
+  { id: 1, amountUsdc: 1000, status: 'locked', durationDays: 30 },
+  { id: 2, amountUsdc: 500, status: 'grace-period', durationDays: 90 },
+  { id: 3, amountUsdc: 750, status: 'active', durationDays: 180 },
 ]
-
-function getPenaltyRate(status: BondStatus): number {
-  switch (status) {
-    case 'locked':
-      return 0.2
-    case 'grace-period':
-      return 0.1
-    case 'active':
-    default:
-      return 0
-  }
-}
-
-function computeWithdrawBreakdown(bond: MockBond): ConfirmDialogPenaltyBreakdown & {
-  penaltyUsdc: number
-} {
-  const penaltyPercent = Math.round(getPenaltyRate(bond.status) * 100)
-  const penaltyUsdc = bond.amountUsdc * getPenaltyRate(bond.status)
-  const resultingUsdc = bond.amountUsdc - penaltyUsdc
-
-  return {
-    bondAmount: formatUsdc(bond.amountUsdc),
-    penaltyAmount: formatUsdc(penaltyUsdc),
-    penaltyPercent,
-    resultingBalance: formatUsdc(resultingUsdc),
-    penaltyUsdc,
-  }
-}
 
 interface BondRowProps {
   bond: MockBond
@@ -89,10 +53,20 @@ function BondRow({ bond, isConnected, onWithdraw, onConnect }: BondRowProps) {
           gap: 'var(--credence-space-3)',
         }}
       >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--credence-space-1)' }}>
+        <Link
+          to={`/bond/${bond.id}`}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'var(--credence-space-1)',
+            textDecoration: 'none',
+            color: 'inherit',
+            cursor: 'pointer',
+          }}
+        >
           <span style={{ fontWeight: 500 }}>{formatUsdc(bond.amountUsdc)}</span>
           <Badge variant={bond.status as BadgeVariant} />
-        </div>
+        </Link>
         <div style={{ display: 'flex', gap: 'var(--credence-space-2)', flexWrap: 'wrap', alignItems: 'center' }}>
           {hasPenalty && (
             <button
